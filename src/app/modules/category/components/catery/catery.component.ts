@@ -75,4 +75,20 @@ export class CateryComponent implements OnInit {
       duration: 2000,
     });
   }
+
+  edit(id: number, name: string, descripcion: string) {
+    const dialogRefAbierto = this.dialog.open(NewCategoryComponent, {
+      // width: '450px',
+      data: { id: id, name: name, descripcion: descripcion },
+    });
+
+    dialogRefAbierto.afterClosed().subscribe((result) => {
+      if (result == 1) {
+        this.openSnackBarMensajes('Categoria Actualizada', 'existosa');
+        this.getCategory();
+      } else if (result == 2) {
+        this.openSnackBarMensajes('No se pudo actualizar', 'error');
+      }
+    });
+  }
 }

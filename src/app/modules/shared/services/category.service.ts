@@ -24,4 +24,9 @@ export class CategoryService {
     const endpoint = `${this.base_url}/categories`;
     return this.http.post<Category>(endpoint, body);
   }
+
+  updateCategaria(body: Category, id: number): Observable<Category> {
+    const endpoint = `${this.base_url}/categories/${id}`;
+    return this.http.put<Category>(endpoint, body);
+  }
 }
