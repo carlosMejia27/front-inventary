@@ -14,7 +14,13 @@
     <div class="right">
       <ul>
         <li>
-          <button mat-raised-button color="primary">Agregar Categoria</button>
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="openCatalogoDialogo()"
+          >
+            Agregar Categoria
+          </button>
         </li>
       </ul>
     </div>
@@ -52,7 +58,6 @@
           </button>
         </td>
       </ng-container>
-
       <tr mat-header-row *matHeaderRowDef="cabeceraFilaTitulosTabla"></tr>
       <tr mat-row *matRowDef="let row; columns: cabeceraFilaTitulosTabla"></tr>
     </table>

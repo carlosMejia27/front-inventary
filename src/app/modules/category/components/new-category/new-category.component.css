@@ -1,0 +1,9 @@
+.categoryContainer{
+  display: flex;
+  flex-direction: column;
+}
+
+.categoryContainer>*{
+  width: 100%;
+}
+

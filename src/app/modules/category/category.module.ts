@@ -4,9 +4,10 @@ import { CateryComponent } from './components/catery/catery.component';
 import { MaterialModule } from '../shared/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NewCategoryComponent } from './components/new-category/new-category.component';
 
 @NgModule({
-  declarations: [CateryComponent],
+  declarations: [CateryComponent, NewCategoryComponent],
   imports: [
     CommonModule,
     MaterialModule,
