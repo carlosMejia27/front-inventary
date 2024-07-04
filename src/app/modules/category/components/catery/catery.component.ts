@@ -106,4 +106,14 @@ export class CateryComponent implements OnInit {
       }
     });
   }
+
+  buscar(termino: any) {
+    if (termino.length === 0) {
+      return this.getCategory();
+    } else {
+      this.categoryService.getCategoryId(termino).subscribe((resp: any) => {
+        this.processCategoryResponse(resp);
+      });
+    }
+  }
 }
