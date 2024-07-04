@@ -29,4 +29,9 @@ export class CategoryService {
     const endpoint = `${this.base_url}/categories/${id}`;
     return this.http.put<Category>(endpoint, body);
   }
+
+  eLiminarCategaria(id: number) {
+    const endpoint = `${this.base_url}/categories/${id}`;
+    return this.http.delete(endpoint);
+  }
 }

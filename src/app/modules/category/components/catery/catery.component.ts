@@ -1,5 +1,4 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { stringToKeyValue } from '@angular/flex-layout/extended/style/style-transforms';
 import { MatDialog } from '@angular/material/dialog';
 import {
   MatSnackBar,
@@ -7,8 +6,8 @@ import {
   SimpleSnackBar,
 } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
-import { Action } from 'rxjs/internal/scheduler/Action';
 import { Category, Inventario } from '../../../interfaces/inventario.interface';
+import { ConfirmComponent } from '../../../shared/components/confirm/confirm.component';
 import { CategoryService } from '../../../shared/services/category.service';
 import { NewCategoryComponent } from '../new-category/new-category.component';
 
@@ -57,7 +56,7 @@ export class CateryComponent implements OnInit {
       // width: '450px',
     });
 
-    dialogRefAbierto.afterClosed().subscribe((result) => {
+    dialogRefAbierto.afterClosed().subscribe((result: any) => {
       if (result == 1) {
         this.openSnackBarMensajes('Categoria Agregada', 'existosa');
         this.getCategory();
@@ -82,12 +81,28 @@ export class CateryComponent implements OnInit {
       data: { id: id, name: name, descripcion: descripcion },
     });
 
-    dialogRefAbierto.afterClosed().subscribe((result) => {
+    dialogRefAbierto.afterClosed().subscribe((result: any) => {
       if (result == 1) {
         this.openSnackBarMensajes('Categoria Actualizada', 'existosa');
         this.getCategory();
       } else if (result == 2) {
         this.openSnackBarMensajes('No se pudo actualizar', 'error');
+      }
+    });
+  }
+
+  delete(id: number) {
+    const dialogRefAbierto = this.dialog.open(ConfirmComponent, {
+      // width: '450px',
+      data: { id: id },
+    });
+
+    dialogRefAbierto.afterClosed().subscribe((result: any) => {
+      if (result == 1) {
+        this.openSnackBarMensajes('Categoria Borrada', 'existosa');
+        this.getCategory();
+      } else if (result == 2) {
+        this.openSnackBarMensajes('No se pudo Borrar', 'error');
       }
     });
   }
