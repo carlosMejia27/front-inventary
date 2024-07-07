@@ -1,5 +1,6 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
 import {
   MatSnackBar,
   MatSnackBarRef,
@@ -19,6 +20,9 @@ import { NewCategoryComponent } from '../new-category/new-category.component';
 export class CateryComponent implements OnInit {
   public dialog = inject(MatDialog);
   private snackBar = inject(MatSnackBar);
+
+  @ViewChild(MatPaginator)
+  paginator!: MatPaginator;
 
   ngOnInit(): void {
     this.getCategory();
@@ -47,6 +51,7 @@ export class CateryComponent implements OnInit {
       listCategories.forEach((element: Category) => {
         dataCategory.push(element);
         this.dataSource = new MatTableDataSource<Category>(dataCategory);
+        this.dataSource.paginator = this.paginator;
       });
     }
   }
