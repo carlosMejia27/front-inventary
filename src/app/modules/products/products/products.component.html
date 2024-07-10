@@ -1,10 +1,10 @@
 <mat-card>
-  <h2 class="alinear">Listado De Categorias</h2>
+  <h2 class="alinear">Listado De Productos</h2>
   <mat-card-header>
     <div class="div">
-      <mat-form-field hintLabel="Busca Categorias" appearance="fill">
-        <mat-label>Buscar Categoriaaaa</mat-label>
-        <input matInput #input (keyup)="buscar(input.value)" />
+      <mat-form-field hintLabel="Busca Productos" appearance="fill">
+        <mat-label>Buscar Productos</mat-label>
+        <input matInput #input />
         <!-- <input matInput placeholder="Ingrese categoría" /> -->
       </mat-form-field>
     </div>
@@ -14,19 +14,13 @@
     <div class="right">
       <ul>
         <li>
-          <button
-            mat-raised-button
-            color="primary"
-            (click)="openCatalogoDialogo()"
-          >
-            Agregar Categoria
-          </button>
+          <button mat-raised-button color="primary">Agregar Productos</button>
         </li>
       </ul>
     </div>
   </mat-card-header>
 
-  <!-- <div mat-card-image></div> -->
+  <div mat-card-image></div>
 
   <mat-card-content>
     <table mat-table [dataSource]="dataSource" class="mat-cell">
@@ -41,24 +35,37 @@
         <td mat-cell *matCellDef="let element">{{ element.name }}</td>
       </ng-container>
       <!--  descripcion columna -->
-      <ng-container matColumnDef="description">
-        <th mat-header-cell *matHeaderCellDef>Descripcion</th>
-        <td mat-cell *matCellDef="let element">{{ element.descripcion }}</td>
+      <ng-container matColumnDef="precio">
+        <th mat-header-cell *matHeaderCellDef>Precio</th>
+        <td mat-cell *matCellDef="let element">{{ element.precio }}</td>
+      </ng-container>
+      <!--  descripcion columna -->
+      <ng-container matColumnDef="account">
+        <th mat-header-cell *matHeaderCellDef>Cantidad</th>
+        <td mat-cell *matCellDef="let element">{{ element.account }}</td>
+      </ng-container>
+      <!--  descripcion columna -->
+      <ng-container matColumnDef="category">
+        <th mat-header-cell *matHeaderCellDef>Categoria</th>
+        <td mat-cell *matCellDef="let element">{{ element.category.name }}</td>
+      </ng-container>
+      <!--  descripcion columna -->
+      <ng-container matColumnDef="picture">
+        <th mat-header-cell *matHeaderCellDef>Foto</th>
+        <td mat-cell *matCellDef="let element">
+          <img [src]="element.picture" width="80px" height="80px" alt="" />
+        </td>
       </ng-container>
 
       <!-- acciones que van a tener -->
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef>Aciones</th>
         <td mat-cell *matCellDef="let element; let i = index">
-          <button
-            mat-icon-button
-            color="accent"
-            (click)="edit(element.id, element.name, element.descripcion)"
-          >
+          <button mat-icon-button color="accent">
             <mat-icon aria-label="Edit">edit</mat-icon>
           </button>
-          <button mat-icon-button color="accent" (click)="delete(element.id)">
-            <mat-icon aria-label="Deliete">delete</mat-icon>
+          <button mat-icon-button color="accent">
+            <mat-icon aria-label="Delete">delete</mat-icon>
           </button>
         </td>
       </ng-container>

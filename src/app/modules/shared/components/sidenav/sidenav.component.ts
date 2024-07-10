@@ -21,7 +21,7 @@ export class SidenavComponent {
     },
     {
       name: 'Products',
-      route: 'home',
+      route: 'products',
       icon: 'production_quantity_limits',
     },
   ];
