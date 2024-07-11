@@ -15,4 +15,14 @@ export class ProductsService {
     const endPoint = `${this.base_url}/products`;
     return this.http.get<InventarioProducto>(endPoint);
   }
+
+  // save(body: InventarioProducto) {
+  //   const endPoint = `${this.base_url}/products`;
+  //   return this.http.post<InventarioProducto>(endPoint, body);
+  // }
+
+  save(body: any) {
+    const endPoint = `${this.base_url}/products`;
+    return this.http.post(endPoint, body);
+  }
 }

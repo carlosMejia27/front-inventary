@@ -1,0 +1,67 @@
+<h2 mat-dialog-title>{{ estadoFormulario }} Nuevo Producto</h2>
+<mat-dialog-content>
+  <form [formGroup]="productsForm">
+    <div class="categoryContainer">
+      <mat-form-field>
+        <input matInput placeholder="Nombre" formControlName="name" required />
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Precio"
+          type="number"
+          formControlName="precio"
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Cantidad"
+          type="number"
+          formControlName="account"
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Categoria</mat-label>
+        <mat-select formControlName="category">
+          <mat-option *ngFor="let cat of categories" [value]="cat.id">
+            {{ cat.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div>
+        <mat-label> Foto:</mat-label>
+        <label for="file-update" class="subir">Subir archivo</label>
+        <input
+          id="file-update"
+          accept="image/png, image/jpeg"
+          (change)="onFileChange($event)"
+          type="file"
+          formControlName="picture"
+          class="input-file"
+        />
+        <span>{{ nameImage }}</span>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button
+    mat-button
+    color="primary"
+    (click)="OnSave()"
+    [disabled]="productsForm.invalid"
+  >
+    <mat-icon>save</mat-icon>
+  </button>
+  <button mat-button color="primary" (click)="OnCancel()">
+    <mat-icon>cancel</mat-icon>
+  </button>
+</mat-dialog-actions>
