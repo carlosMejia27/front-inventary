@@ -5,6 +5,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ProductsService } from '../../shared/services/products.service';
 import { CategoryService } from '../../shared/services/category.service';
 import { Category } from '../../interfaces/inventario.interface';
+import { consumerPollProducersForChange } from '@angular/core/primitives/signals';
 
 @Component({
   selector: 'app-new-products',
@@ -31,8 +32,14 @@ export class NewProductsComponent implements OnInit {
       category: ['', Validators.required],
       picture: ['', Validators.required],
     });
+
     this.estadoFormulario = 'Agregar';
     this.getCategory();
+
+    if (this.data != null) {
+      this.estadoFormulario = 'Actualizar';
+      this.updateForm(this.data);
+    }
   }
 
   OnCancel() {
@@ -50,24 +57,37 @@ export class NewProductsComponent implements OnInit {
     const updateImageData = new FormData();
     updateImageData.append('picture', data.picture, data.picture.name);
     updateImageData.append('name', data.name);
-    updateImageData.append('precio', data.precio);
+    updateImageData.append('price', data.precio);
     updateImageData.append('account', data.account);
-    updateImageData.append('category', data.category);
+    updateImageData.append('categoryId', data.category);
 
     // Iterar sobre el FormData para verificar su contenido
     // updateImageData.forEach((value, key) => {
     //   console.log(key, value);
     // });
 
+    if (this.data != null) {
+      this.productService
+        .updateProduct(updateImageData, this.data.id)
+        .subscribe(
+          (response) => {
+            this.dialogRef.close(1);
+          },
+          (error) => {
+            this.dialogRef.close(2);
+          }
+        );
+    } else {
+      this.productService.save(updateImageData).subscribe(
+        (response) => {
+          this.dialogRef.close(1);
+        },
+        (error) => {
+          this.dialogRef.close(2);
+        }
+      );
+    }
     // llamamos al servicio
-    this.productService.save(updateImageData).subscribe(
-      (response) => {
-        this.dialogRef.close(1);
-      },
-      (error) => {
-        this.dialogRef.close(2);
-      }
-    );
   }
 
   getCategory() {
@@ -83,5 +103,16 @@ export class NewProductsComponent implements OnInit {
       console.log(this.selectedFile);
       this.nameImage = input.files[0].name;
     }
+  }
+
+  updateForm(data: any) {
+    console.log('yyyyyyyyyyyy', data);
+    this.productsForm = this.fb.group({
+      name: [data.name, Validators.required],
+      precio: [data.price, Validators.required],
+      account: [data.account, Validators.required],
+      category: [data.categoryId.id, Validators.required],
+      picture: ['', Validators.required],
+    });
   }
 }

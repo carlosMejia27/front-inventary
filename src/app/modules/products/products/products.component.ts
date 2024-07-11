@@ -10,6 +10,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { InventarioProducto, ProductElement } from '../../interfaces/products';
 import { ProductsService } from '../../shared/services/products.service';
 import { NewProductsComponent } from '../new-products/new-products.component';
+import { Category } from '../../interfaces/inventario.interface';
 
 @Component({
   selector: 'app-products',
@@ -54,21 +55,13 @@ export class ProductsComponent implements OnInit {
     const dataProduct: ProductElement[] = [];
 
     if (resp.metadatos[0].code === '00') {
-      resp.product.products.forEach((product) => {
-        // Aseguramos que product.category sea del tipo Category
-        product.category = {
-          id: product.category.id,
-          name: product.category.name,
-          descripcion: product.category.descripcion,
-        };
+      let listProducts = resp.product.products;
 
-        // Asignación correcta de la imagen en formato Base64
-        product.picture = 'data:image/jpeg;base64,' + product.picture;
-        dataProduct.push(product);
+      listProducts.forEach((element: ProductElement) => {
+        element.picture = 'data:image/jpeg;base64,' + element.picture;
+        dataProduct.push(element);
       });
 
-      // Asignamos el nuevo datasource y configuramos el paginador
-      // this.dataSource.data = dataProduct;
       this.dataSource = new MatTableDataSource<ProductElement>(dataProduct);
       this.dataSource.paginator = this.paginator;
     }
@@ -85,6 +78,42 @@ export class ProductsComponent implements OnInit {
         this.getProduct();
       } else if (result == 2) {
         this.openSnackBarMensajes('se Produjo un error', 'error');
+      }
+    });
+  }
+
+  edit(
+    id: number,
+    name: string,
+    precio: number,
+    account: number,
+    category: Category
+  ) {
+    const dialogRefAbierto = this.dialog.open(NewProductsComponent, {
+      // width: '450px',
+      data: {
+        id: id,
+        name: name,
+        price: precio,
+        account: account,
+        categoryId: category,
+      },
+    });
+    console.log(
+      '-------------RRRR------------',
+      id,
+      name,
+      precio,
+      account,
+      category
+    );
+
+    dialogRefAbierto.afterClosed().subscribe((result: any) => {
+      if (result == 1) {
+        this.openSnackBarMensajes('producto editado', 'existosa');
+        this.getProduct();
+      } else if (result == 2) {
+        this.openSnackBarMensajes('se Produjo un error al editarlo ', 'error');
       }
     });
   }
