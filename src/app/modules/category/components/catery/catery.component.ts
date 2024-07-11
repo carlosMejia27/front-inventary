@@ -99,7 +99,7 @@ export class CateryComponent implements OnInit {
   delete(id: number) {
     const dialogRefAbierto = this.dialog.open(ConfirmComponent, {
       // width: '450px',
-      data: { id: id },
+      data: { id: id, module: 'category' },
     });
 
     dialogRefAbierto.afterClosed().subscribe((result: any) => {

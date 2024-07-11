@@ -11,6 +11,7 @@ import { InventarioProducto, ProductElement } from '../../interfaces/products';
 import { ProductsService } from '../../shared/services/products.service';
 import { NewProductsComponent } from '../new-products/new-products.component';
 import { Category } from '../../interfaces/inventario.interface';
+import { ConfirmComponent } from '../../shared/components/confirm/confirm.component';
 
 @Component({
   selector: 'app-products',
@@ -99,14 +100,6 @@ export class ProductsComponent implements OnInit {
         categoryId: category,
       },
     });
-    console.log(
-      '-------------RRRR------------',
-      id,
-      name,
-      precio,
-      account,
-      category
-    );
 
     dialogRefAbierto.afterClosed().subscribe((result: any) => {
       if (result == 1) {
@@ -114,6 +107,25 @@ export class ProductsComponent implements OnInit {
         this.getProduct();
       } else if (result == 2) {
         this.openSnackBarMensajes('se Produjo un error al editarlo ', 'error');
+      }
+    });
+  }
+
+  deleteproducts(id: any) {
+    const dialogRefAbierto = this.dialog.open(ConfirmComponent, {
+      // width: '450px',
+      data: { id: id, module: 'product' },
+    });
+
+    dialogRefAbierto.afterClosed().subscribe((result: any) => {
+      if (result == 1) {
+        this.openSnackBarMensajes('producto eliminado', 'existosa');
+        this.getProduct();
+      } else if (result == 2) {
+        this.openSnackBarMensajes(
+          'se Produjo un error al eliminar producto ',
+          'error'
+        );
       }
     });
   }
