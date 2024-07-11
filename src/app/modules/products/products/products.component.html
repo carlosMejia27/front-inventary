@@ -4,7 +4,7 @@
     <div class="div">
       <mat-form-field hintLabel="Busca Productos" appearance="fill">
         <mat-label>Buscar Productos</mat-label>
-        <input matInput #input />
+        <input matInput #input (keyup)="buscarProducto(input.value)" />
         <!-- <input matInput placeholder="Ingrese categoría" /> -->
       </mat-form-field>
     </div>

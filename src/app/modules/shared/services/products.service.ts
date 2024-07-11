@@ -35,4 +35,9 @@ export class ProductsService {
     const endPoint = `${this.base_url}/products/${id}`;
     return this.http.delete(endPoint);
   }
+
+  getProductByName(name: any) {
+    const endPoint = `${this.base_url}/products/filter/${name}`;
+    return this.http.get(endPoint);
+  }
 }
