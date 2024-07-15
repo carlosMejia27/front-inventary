@@ -3,9 +3,15 @@
   margin-top: 20px;
   }
 
+  ul{
+    display: flex;
+  }
+
   ul li{
    list-style: none;
+   margin-right: 10px;
   }
+
 
   .right{
     margin-left: auto;

@@ -23,7 +23,7 @@ export class ProductsComponent implements OnInit {
   public dialog = inject(MatDialog);
   private snackBar = inject(MatSnackBar);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  // private productsService = inject(ProductsService);
+  private productsService = inject(ProductsService);
   private utilService = inject(UtilService);
   isAdmin: any;
 
@@ -38,7 +38,7 @@ export class ProductsComponent implements OnInit {
   ];
   dataSource = new MatTableDataSource<ProductElement>();
 
-  constructor(private productsService: ProductsService) {}
+  // constructor(private productsService: ProductsService) {}
 
   ngOnInit(): void {
     this.getProduct();
@@ -50,7 +50,7 @@ export class ProductsComponent implements OnInit {
       (data: InventarioProducto) => {
         this.processProductos(data);
       },
-      (error) => {
+      (error: any) => {
         console.log('Error al obtener productos', error);
       }
     );
@@ -151,5 +151,27 @@ export class ProductsComponent implements OnInit {
     return this.snackBar.open(msj, action, {
       duration: 2000,
     });
+  }
+
+  exportExcel() {
+    this.productsService.getExportProduct().subscribe(
+      (data: any) => {
+        let file = new Blob([data], {
+          type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        });
+        let fileUrl = URL.createObjectURL(file);
+        var ancho = document.createElement('a');
+        ancho.download = 'Productos.xlsx';
+        ancho.href = fileUrl;
+        ancho.click();
+        this.openSnackBarMensajes('Archivo exportado correctamente', 'ok');
+      },
+      (error: any) => {
+        this.openSnackBarMensajes(
+          'Archivo  no exportado correctamente',
+          'no ok'
+        );
+      }
+    );
   }
 }
