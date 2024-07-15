@@ -75,6 +75,28 @@ export class CateryComponent implements OnInit {
     });
   }
 
+  exportExcel() {
+    this.categoryService.getExportCategory().subscribe(
+      (data: any) => {
+        let file = new Blob([data], {
+          type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        });
+        let fileUrl = URL.createObjectURL(file);
+        var ancho = document.createElement('a');
+        ancho.download = 'Categories.xlsx';
+        ancho.href = fileUrl;
+        ancho.click();
+        this.openSnackBarMensajes('Archivo exportado correctamente', 'ok');
+      },
+      (error: any) => {
+        this.openSnackBarMensajes(
+          'Archivo  no exportado correctamente',
+          'no ok'
+        );
+      }
+    );
+  }
+
   openSnackBarMensajes(
     msj: string,
     action: string
