@@ -79,6 +79,7 @@
                 element.category
               )
             "
+            *ngIf="isAdmin"
           >
             <mat-icon aria-label="Edit">edit</mat-icon>
           </button>
@@ -86,6 +87,7 @@
             mat-icon-button
             color="accent"
             (click)="deleteproducts(element.id)"
+            *ngIf="isAdmin"
           >
             <mat-icon aria-label="Delete">delete</mat-icon>
           </button>

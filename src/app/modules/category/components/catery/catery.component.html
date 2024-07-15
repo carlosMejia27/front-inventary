@@ -54,10 +54,16 @@
             mat-icon-button
             color="accent"
             (click)="edit(element.id, element.name, element.descripcion)"
+            *ngIf="isAdmin"
           >
             <mat-icon aria-label="Edit">edit</mat-icon>
           </button>
-          <button mat-icon-button color="accent" (click)="delete(element.id)">
+          <button
+            mat-icon-button
+            color="accent"
+            (click)="delete(element.id)"
+            *ngIf="isAdmin"
+          >
             <mat-icon aria-label="Deliete">delete</mat-icon>
           </button>
         </td>

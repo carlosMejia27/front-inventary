@@ -12,6 +12,7 @@ import { ProductsService } from '../../shared/services/products.service';
 import { NewProductsComponent } from '../new-products/new-products.component';
 import { Category } from '../../interfaces/inventario.interface';
 import { ConfirmComponent } from '../../shared/components/confirm/confirm.component';
+import { UtilService } from '../../shared/services/util.service';
 
 @Component({
   selector: 'app-products',
@@ -23,6 +24,8 @@ export class ProductsComponent implements OnInit {
   private snackBar = inject(MatSnackBar);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   // private productsService = inject(ProductsService);
+  private utilService = inject(UtilService);
+  isAdmin: any;
 
   cabeceraFilaTitulosTabla: string[] = [
     'id',
@@ -39,6 +42,7 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProduct();
+    this.isAdmin = this.utilService.isAdmin();
   }
 
   getProduct(): void {

@@ -10,6 +10,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Category, Inventario } from '../../../interfaces/inventario.interface';
 import { ConfirmComponent } from '../../../shared/components/confirm/confirm.component';
 import { CategoryService } from '../../../shared/services/category.service';
+import { UtilService } from '../../../shared/services/util.service';
 import { NewCategoryComponent } from '../new-category/new-category.component';
 
 @Component({
@@ -20,12 +21,15 @@ import { NewCategoryComponent } from '../new-category/new-category.component';
 export class CateryComponent implements OnInit {
   public dialog = inject(MatDialog);
   private snackBar = inject(MatSnackBar);
+  private utilService = inject(UtilService);
+  isAdmin: any;
 
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
 
   ngOnInit(): void {
     this.getCategory();
+    this.isAdmin = this.utilService.isAdmin();
   }
   cabeceraFilaTitulosTabla: string[] = ['id', 'name', 'description', 'actions'];
   dataSource = new MatTableDataSource<Category>();
